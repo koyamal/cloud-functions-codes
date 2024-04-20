@@ -14,5 +14,10 @@ const firestore = new Firestore(gcpOptions);
 // when you make an HTTP request to the deployed function's endpoint.
 functions.http('entryPoint', async (req, res) => {
   const ref = await firestore.collection("test").get();
-  res.send('Hello World!');
+  const output = [];
+  for (const doc of ref.docs) {
+    const data = doc.data();
+    output.push(data);
+  }
+  res.send(output);
 });
