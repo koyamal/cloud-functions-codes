@@ -1,7 +1,23 @@
-const functions = require('@google-cloud/functions-framework');
+import functions from '@google-cloud/functions-framework';
+import { Firestore } from '@google-cloud/firestore';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const projectId = process.env.GCP_PROJECT;
+const gcpOptions = {
+  projectId,
+};
+
+const firestore = new Firestore(gcpOptions);
 
 // Register an HTTP function with the Functions Framework that will be executed
 // when you make an HTTP request to the deployed function's endpoint.
-functions.http('helloGET', (req, res) => {
-  res.send('Hello World!');
+functions.http('entryPoint', async (req, res) => {
+  const ref = await firestore.collection("test").get();
+  const output = [];
+  for (const doc of ref.docs) {
+    const data = doc.data();
+    output.push(data);
+  }
+  res.send(output);
 });

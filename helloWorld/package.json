@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-dev": "gcloud functions deploy ${npm_package_name} --gen2 --runtime=nodejs18 --region=asia-northeast1 --source=. --entry-point=helloGET --trigger-http  --allow-unauthenticated"
+    "deploy-dev": "gcloud functions deploy ${npm_package_name} --gen2 --runtime=nodejs18 --region=asia-northeast1 --source=. --entry-point=entryPoint --trigger-http  --allow-unauthenticated"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.1.0"
+    "@google-cloud/functions-framework": "^3.1.0",
+    "@google-cloud/firestore": "7.6.0",
+    "dotenv": "^16.3.1"
   }
 }
